@@ -9,6 +9,9 @@ app.use(express.json());
 app.use("/api/v1", rootRouter);
 
 const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
+}).on("error", (err) => {
+    console.error("Server error:", err);
 });
