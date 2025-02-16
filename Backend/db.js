@@ -3,9 +3,8 @@ const bcrypt = require("bcryptjs");
 const { MONGO_URI } = require("./config");
 
 mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log(" Database connected successfully"))
-    .catch(err => console.error(" Database connection error:", err));
-
+    .then(() => console.log("Database connected successfully"))
+    .catch(err => console.error("Database connection error:", err));
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -38,14 +37,12 @@ const userSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-
-
 userSchema.pre("save", async function (next) {
-    if (!this.isModified("password")) return next(); 
+    if (!this.isModified("password")) return next();
 
     try {
-        const salt = await bcrypt.genSalt(10);
-        this.password = await bcrypt.hash(this.password, salt);
+        const salt = await bcrypt.genSalt(10); // Salt for bcrypt
+        this.password = await bcrypt.hash(this.password, salt); // Hash the password
         next();
     } catch (error) {
         next(error);
@@ -53,7 +50,7 @@ userSchema.pre("save", async function (next) {
 });
 
 userSchema.methods.comparePassword = async function (enteredPassword) {
-    return await bcrypt.compare(enteredPassword, this.password);
+    return await bcrypt.compare(enteredPassword, this.password); // 
 };
 
 const User = mongoose.model("User", userSchema);

@@ -5,10 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node index.js"
   },
-  "author": "Ashish Mahajan and Karanveer Singh ",
+  "author": "Ashish Mahajan and Karanveer Singh",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -16,6 +15,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
-    "mongoos": "^0.0.1-security"
+    "mongoose": "^8.10.0",
+    "zod": "^3.24.2"
   }
 }

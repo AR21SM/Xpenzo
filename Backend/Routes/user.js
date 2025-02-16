@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const zod = require("zod");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { User } = require("../db");
 const { JWT_SECRET } = require("../config");
@@ -9,9 +9,9 @@ const authMiddleware = require("../middleware");
 
 const signupSchema = zod.object({
     username: zod.string().email(),
-    firstName: zod.string().min(2, "First name must be at least 2 characters"),
-    lastName: zod.string().min(2, "Last name must be at least 2 characters"),
-    password: zod.string().min(6, "Password must be at least 6 characters"),
+    firstName: zod.string().min(2),
+    lastName: zod.string().min(2),
+    password: zod.string().min(6),
 });
 
 router.post("/signup", async (req, res) => {
@@ -66,12 +66,12 @@ router.post("/signin", async (req, res) => {
 });
 
 const updateSchema = zod.object({
-    password: zod.string().min(6, "Password must be at least 6 characters").optional(),
+    password: zod.string().min(6).optional(),
     firstName: zod.string().min(2).optional(),
     lastName: zod.string().min(2).optional(),
 });
 
-router.put("/", authMiddleware, async (req, res) => {
+router.put("/update", authMiddleware, async (req, res) => {
     try {
         const parsed = updateSchema.safeParse(req.body);
         if (!parsed.success) {
